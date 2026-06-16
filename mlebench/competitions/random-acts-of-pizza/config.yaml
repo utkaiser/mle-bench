@@ -6,7 +6,7 @@ prizes: null
 description: mlebench/competitions/random-acts-of-pizza/description.md
 
 dataset:
-  answers: random-acts-of-pizza/prepared/private/test.csv
+  answers: random-acts-of-pizza/test_data/ground_truth.csv
   sample_submission: random-acts-of-pizza/prepared/public/sampleSubmission.csv
 
 grader:

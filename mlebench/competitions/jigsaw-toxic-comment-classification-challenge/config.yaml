@@ -12,7 +12,7 @@ prizes:
 description: mlebench/competitions/jigsaw-toxic-comment-classification-challenge/description.md
 
 dataset:
-  answers: jigsaw-toxic-comment-classification-challenge/prepared/private/test.csv
+  answers: jigsaw-toxic-comment-classification-challenge/test_data/ground_truth.csv
   sample_submission: jigsaw-toxic-comment-classification-challenge/prepared/public/sample_submission.csv
 
 grader:

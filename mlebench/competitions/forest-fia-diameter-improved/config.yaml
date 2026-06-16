@@ -1,0 +1,14 @@
+id: forest-fia-diameter-improved
+name: Forest FIA Diameter Improved
+competition_type: code
+awards_medals: false
+prizes: null
+description: testing/tasks/forest-fia-diameter-improved/description.md
+
+dataset:
+  answers: forest-fia-diameter-improved/test_data/test.csv
+  sample_submission: forest-fia-diameter-improved/sample_submission.csv
+
+grader:
+  name: custom
+  grade_fn: testing.eval.forest-fia-diameter-improved.grade:grade

@@ -16,7 +16,7 @@ prizes:
 description: mlebench/competitions/google-quest-challenge/description.md
 
 dataset:
-  answers: google-quest-challenge/prepared/private/test.csv
+  answers: google-quest-challenge/test_data/ground_truth.csv
   sample_submission: google-quest-challenge/prepared/public/sample_submission.csv
 
 grader:

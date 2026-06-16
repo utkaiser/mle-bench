@@ -1,0 +1,14 @@
+id: forest-fia-vignesh
+name: Forest FIA Vignesh
+competition_type: code
+awards_medals: false
+prizes: null
+description: testing/tasks/forest-fia-vignesh/description.md
+
+dataset:
+  answers: forest-fia-vignesh/test_data/test.csv
+  sample_submission: forest-fia-vignesh/sample_submission.csv
+
+grader:
+  name: custom
+  grade_fn: testing.eval_data.forest-fia-vignesh.grade:grade

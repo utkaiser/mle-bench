@@ -157,6 +157,9 @@ def is_dataset_prepared(competition: Competition, grading_only: bool = False) ->
         competition, Competition
     ), f"Expected input to be of type `Competition` but got {type(competition)}."
 
+    if competition.dataset_type == "bigquery":
+        return True
+
     public = competition.public_dir
     private = competition.private_dir
 

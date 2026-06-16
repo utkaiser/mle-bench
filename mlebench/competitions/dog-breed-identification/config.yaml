@@ -6,7 +6,7 @@ prizes: null
 description: mlebench/competitions/dog-breed-identification/description.md
 
 dataset:
-  answers: dog-breed-identification/prepared/private/test.csv
+  answers: dog-breed-identification/test_data/ground_truth.csv
   sample_submission: dog-breed-identification/prepared/public/sample_submission.csv
 
 grader:

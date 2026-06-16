@@ -239,6 +239,7 @@ def prepare_for_auroc_metric(
     if target_col not in submission.columns:
         raise InvalidSubmissionError(f"Submission should have a {target_col} column")
     if len(submission) != len(answers):
+        print(f">>> DEBUG row count: submission={len(submission)}, answers={len(answers)}")
         raise InvalidSubmissionError(f"Submission and answers should have the same number of rows")
     try:
         pd.to_numeric(submission[target_col])

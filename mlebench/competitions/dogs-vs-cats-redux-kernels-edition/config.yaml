@@ -6,7 +6,7 @@ prizes: null
 description: mlebench/competitions/dogs-vs-cats-redux-kernels-edition/description.md
 
 dataset:
-  answers: dogs-vs-cats-redux-kernels-edition/prepared/private/answers.csv
+  answers: dogs-vs-cats-redux-kernels-edition/test_data/ground_truth.csv
   sample_submission: dogs-vs-cats-redux-kernels-edition/prepared/public/sample_submission.csv
 
 grader:

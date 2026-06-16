@@ -19,9 +19,9 @@ class Competition:
     name: str
     description: str
     grader: Grader
-    answers: Path
-    gold_submission: Path
-    sample_submission: Path
+    answers: Path | str
+    gold_submission: Path | str
+    sample_submission: Path | str
     competition_type: str
     prepare_fn: Callable[[Path, Path, Path], Path]
     raw_dir: Path
@@ -29,18 +29,20 @@ class Competition:
     public_dir: Path
     checksums: Path
     leaderboard: Path
+    dataset_type: str
 
     def __post_init__(self):
         assert isinstance(self.id, str), "Competition id must be a string."
         assert isinstance(self.name, str), "Competition name must be a string."
         assert isinstance(self.description, str), "Competition description must be a string."
         assert isinstance(self.grader, Grader), "Competition grader must be of type Grader."
-        assert isinstance(self.answers, Path), "Competition answers must be a Path."
-        assert isinstance(self.gold_submission, Path), "Gold submission must be a Path."
-        assert isinstance(self.sample_submission, Path), "Sample submission must be a Path."
+        assert isinstance(self.answers, (Path, str)), "Competition answers must be a Path or str."
+        assert isinstance(self.gold_submission, (Path, str)), "Gold submission must be a Path or str."
+        assert isinstance(self.sample_submission, (Path, str)), "Sample submission must be a Path or str."
         assert isinstance(self.competition_type, str), "Competition type must be a string."
         assert isinstance(self.checksums, Path), "Checksums must be a Path."
         assert isinstance(self.leaderboard, Path), "Leaderboard must be a Path."
+        assert isinstance(self.dataset_type, str), "Dataset type must be a string."
         assert len(self.id) > 0, "Competition id cannot be empty."
         assert len(self.name) > 0, "Competition name cannot be empty."
         assert len(self.description) > 0, "Competition description cannot be empty."
@@ -66,6 +68,7 @@ class Competition:
                 private_dir=data["private_dir"],
                 checksums=data["checksums"],
                 leaderboard=data["leaderboard"],
+                dataset_type=data.get("dataset_type", "local"),
             )
         except KeyError as e:
             raise ValueError(f"Missing key {e} in competition config!")
@@ -89,15 +92,45 @@ class Registry:
 
         preparer_fn = import_fn(config["preparer"])
 
-        answers = self.get_data_dir() / config["dataset"]["answers"]
+        def _get_path(path_str):
+            if isinstance(path_str, str) and path_str.startswith("bq://"):
+                return path_str
+            if isinstance(path_str, str) and "{public_tasks_bucket}" in path_str:
+                import yaml
+                try:
+                    cfg = yaml.safe_load(open("morph_config.yaml"))
+                    bucket = cfg.get("gcp", {}).get("buckets", {}).get("public_tasks", "morph-test-state-cameltrain")
+                except Exception:
+                    bucket = "morph-test-state-cameltrain"
+                path_str = path_str.format(public_tasks_bucket=bucket)
+            if isinstance(path_str, str) and path_str.startswith("gs://"):
+                return path_str
+            p = self.get_data_dir() / path_str
+            if not p.exists() and "prepared/private" in str(path_str):
+                parts = Path(path_str).parts
+                if len(parts) >= 3:
+                    fallback = self.get_data_dir() / parts[0] / "test_data" / parts[-1]
+                    if fallback.exists():
+                        return fallback
+                    fallback_root = self.get_data_dir() / parts[0] / parts[-1]
+                    if fallback_root.exists():
+                        return fallback_root
+            return p
+
+        answers = _get_path(config["dataset"]["answers"])
         gold_submission = answers
         if "gold_submission" in config["dataset"]:
-            gold_submission = self.get_data_dir() / config["dataset"]["gold_submission"]
-        sample_submission = self.get_data_dir() / config["dataset"]["sample_submission"]
+            gold_submission = _get_path(config["dataset"]["gold_submission"])
+        sample_submission = _get_path(config["dataset"]["sample_submission"])
 
         raw_dir = self.get_data_dir() / competition_id / "raw"
         private_dir = self.get_data_dir() / competition_id / "prepared" / "private"
+        if not private_dir.exists():
+            private_dir = self.get_data_dir() / competition_id
+            
         public_dir = self.get_data_dir() / competition_id / "prepared" / "public"
+        if not public_dir.exists():
+            public_dir = self.get_data_dir() / competition_id
 
         return Competition.from_dict(
             {
@@ -112,6 +145,7 @@ class Registry:
                 "public_dir": public_dir,
                 "checksums": checksums_path,
                 "leaderboard": leaderboard_path,
+                "dataset_type": config.get("dataset", {}).get("type", "local"),
             }
         )
 

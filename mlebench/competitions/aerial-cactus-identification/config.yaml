@@ -6,7 +6,7 @@ prizes: null
 description: mlebench/competitions/aerial-cactus-identification/description.md
 
 dataset:
-  answers: aerial-cactus-identification/prepared/private/test.csv
+  answers: aerial-cactus-identification/test_data/ground_truth.csv
   sample_submission: aerial-cactus-identification/prepared/public/sample_submission.csv
 
 grader:

@@ -6,7 +6,7 @@ prizes: null
 description: mlebench/competitions/invasive-species-monitoring/description.md
 
 dataset:
-  answers: invasive-species-monitoring/prepared/private/answers.csv
+  answers: invasive-species-monitoring/test_data/ground_truth.csv
   sample_submission: invasive-species-monitoring/prepared/private/sample_submission.csv
 
 grader:

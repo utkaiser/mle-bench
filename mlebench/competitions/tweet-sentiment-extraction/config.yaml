@@ -12,7 +12,7 @@ prizes:
 description: mlebench/competitions/tweet-sentiment-extraction/description.md
 
 dataset:
-  answers: tweet-sentiment-extraction/prepared/private/test.csv
+  answers: tweet-sentiment-extraction/test_data/ground_truth.csv
   sample_submission: tweet-sentiment-extraction/prepared/public/sample_submission.csv
 
 grader:

@@ -1,0 +1,14 @@
+id: forest-fia-simple-improved
+name: Forest FIA Simple Improved
+competition_type: code
+awards_medals: false
+prizes: null
+description: testing/tasks/forest-fia-simple-improved/description.md
+
+dataset:
+  answers: forest-fia-simple-improved/test_data/test.csv
+  sample_submission: forest-fia-simple-improved/sample_submission.csv
+
+grader:
+  name: custom
+  grade_fn: testing.eval_data.forest-fia-simple-improved.grade:grade

@@ -24,6 +24,7 @@ def grade(submission: pd.DataFrame, answers: pd.DataFrame) -> float:
             f"Submission has {len(submission.columns) - 1} columns, expected {len(CLASSES)}"
         )
     if len(submission) != len(answers):
+        print(f">>> DEBUG row count for google-quest: submission={len(submission)}, answers={len(answers)}")
         raise InvalidSubmissionError("Submission and answers have different lengths")
 
     # answers checks

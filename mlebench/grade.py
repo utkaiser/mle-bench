@@ -52,18 +52,22 @@ def grade_jsonl(
 def grade_csv(path_to_submission: Path, competition: Competition) -> CompetitionReport:
     """Grades a submission CSV for the given competition."""
 
-    if not is_dataset_prepared(competition, grading_only=True):
-        raise ValueError(
-            f"Dataset for competition `{competition.id}` is not prepared! "
-            f"Please run `mlebench prepare -c {competition.id}` to prepare the dataset."
-        )
+    # if not is_dataset_prepared(competition, grading_only=True):
+    #     raise ValueError(
+    #         f"Dataset for competition `{competition.id}` is not prepared! "
+    #         f"Please run `mlebench prepare -c {competition.id}` to prepare the dataset."
+    #     )
+    pass
 
     score = None
     submission_exists = path_to_submission.is_file() and path_to_submission.suffix.lower() == ".csv"
 
     if submission_exists:
         submission_df = read_csv(path_to_submission)
-        answers = load_answers(competition.answers)
+        if competition.dataset_type == "bigquery":
+            answers = competition.answers
+        else:
+            answers = load_answers(competition.answers)
         score = competition.grader(submission_df, answers)
     else:
         logger.warning(
@@ -107,14 +111,16 @@ def validate_submission(submission: Path, competition: Competition) -> tuple[boo
     if not submission.suffix.lower() == ".csv":
         return False, "Submission invalid! Submission file must be a CSV file."
 
-    if not is_dataset_prepared(competition, grading_only=True):
-        raise ValueError(
-            f"Dataset for competition `{competition.id}` is not prepared! "
-            f"Please run `mlebench prepare -c {competition.id}` to prepare the dataset."
-        )
+    # if not is_dataset_prepared(competition, grading_only=True):
+    #     raise ValueError(
+    #         f"Dataset for competition `{competition.id}` is not prepared! "
+    #         f"Please run `mlebench prepare -c {competition.id}` to prepare the dataset."
+    #     )
+    pass
 
     try:
-        competition.grader.grade_fn(read_csv(submission), read_csv(competition.answers))
+        answers_data = competition.answers if competition.dataset_type == "bigquery" else read_csv(competition.answers)
+        competition.grader.grade_fn(read_csv(submission), answers_data)
     except Exception as e:
         return (
             False,

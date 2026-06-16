@@ -6,7 +6,7 @@ prizes: null
 description: mlebench/competitions/new-york-city-taxi-fare-prediction/description.md
 
 dataset:
-  answers: new-york-city-taxi-fare-prediction/prepared/private/test.csv
+  answers: new-york-city-taxi-fare-prediction/test_data/ground_truth.csv
   sample_submission: new-york-city-taxi-fare-prediction/prepared/public/sample_submission.csv
 
 grader:

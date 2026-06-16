@@ -72,7 +72,7 @@ ln -s $LOGS_DIR $logdir/agent_log
 # DATA_DIR is a mounted volume prepared with the data, agent will interact with it at $mlab_env_dir/data
 ln -s $DATA_DIR $mlab_env_dir/data
 # Populate research_problem.txt with the updated instructions.txt, this is given to the agent via a prompt
-cp $INSTRUCTIONS_FILE $AGENT_DIR/MLAgentBench/MLAgentBench/benchmarks/$task/scripts/research_problem.txt
+cp $INSTRUCTIONS_FILE $AGENT_DIR/MLAgentBench/MLAgentBench/benchmarks/$task/utils/scripts/research_problem.txt
 # Agent will receive instructions via the `research_problem.txt` prompt, but we also make a copy available to the agent
 cp $INSTRUCTIONS_FILE $mlab_env_dir/instructions.txt
 # Give the agent access to the validation tool

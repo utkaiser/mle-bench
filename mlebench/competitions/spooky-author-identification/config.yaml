@@ -6,7 +6,7 @@ prizes: null
 description: mlebench/competitions/spooky-author-identification/description.md
 
 dataset:
-  answers: spooky-author-identification/prepared/private/test.csv
+  answers: spooky-author-identification/test_data/ground_truth.csv
   sample_submission: spooky-author-identification/prepared/public/sample_submission.csv
 
 grader:

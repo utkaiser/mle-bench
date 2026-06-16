@@ -1,0 +1,14 @@
+id: biomass-task
+name: Biomass Optimization Task
+competition_type: code
+awards_medals: false
+prizes: null
+description: tasks/biomass-task/description.md
+
+dataset:
+  answers: biomass-task/test_data/test.csv
+  sample_submission: biomass-task/test_data/sample_submission.csv
+
+grader:
+  name: custom
+  grade_fn: testing.eval_data.biomass-task.grade:grade

@@ -26,7 +26,7 @@ prizes:
 description: mlebench/competitions/jigsaw-unintended-bias-in-toxicity-classification/description.md
 
 dataset:
-  answers: jigsaw-unintended-bias-in-toxicity-classification/prepared/private/test.csv
+  answers: jigsaw-unintended-bias-in-toxicity-classification/test_data/ground_truth.csv
   sample_submission: jigsaw-unintended-bias-in-toxicity-classification/prepared/public/sample_submission.csv
 
 grader:
